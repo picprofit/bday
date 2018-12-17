@@ -5,23 +5,6 @@ import db from '../db';
 
 import "react-datepicker/dist/react-datepicker.css";
 
-//TODO: edit good faq
-//TODO: default greeting texts
-//TODO: transitions
-/**
- * кто должен обрабатывать и сохранять карту?
- *
- *
- * App берёт данные из базы и дёргает Card
- Card рендерит карту
- CardForm форма создания/редактирования карты
- Cards список карт
- EditCard загружает данные из базы и показывает CardForm с ними
- Intro загружает CardForm с полями по умолчанию
- Login авторизация и дёргает setUid родителя
-
- */
-
 class App extends React.Component {
   constructor(props) {
     super(props);
