@@ -28,7 +28,6 @@ class CardForm extends React.Component {
 
   dateHandler = birthday => {
     const age = calculateAge(birthday);
-    // this.props.updateData(age, birthday);
     this.setState({
       age,
       birthday
@@ -46,7 +45,6 @@ class CardForm extends React.Component {
 
   submitHandler = event => {
     event.preventDefault();
-    //${this.state.uid}/
     const data = {
       birthday: this.state.birthday.getTime(),
       age: this.state.age,
@@ -62,7 +60,6 @@ class CardForm extends React.Component {
         <form onSubmit={this.submitHandler} className="text-left">
           <div className="form-group form-inline">
             <label htmlFor="datePicker">Select the birthday date</label>
-            {/*maxDate={new Date()}*/}
             <DatePicker
               onChange={this.dateHandler}
               selected={this.state.birthday}
@@ -77,7 +74,6 @@ class CardForm extends React.Component {
             >
               <div style={{color: 'green'}}>Select (your) birthday date!</div>
             </DatePicker>
-            {/*<small id="datePickerHelp" className="form-text text-muted">Hello</small>*/}
           </div>
           <div className="form-group">
             <label htmlFor="nameInput">To</label>
