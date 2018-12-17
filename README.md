@@ -9,5 +9,6 @@ for user's birthday. Also it shows interesting or fun fact about user's age and 
 <h4>TODO:</h4>
 <ul>
 <li>Add some predefined greeting texts;</li>
+<li>Mobile version;</li>
 <li>Add animations/transitions.</li>
 </ul>
