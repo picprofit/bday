@@ -14,15 +14,6 @@ class Intro extends React.Component {
 
   defaultUid = "anonym";
 
-  componentDidMount() {
-    //to sync state
-    // this.ref = db.syncState(`${this.state.cardId}`, {
-    //   context: this,
-    //   state: 'name'
-    // });
-    //
-  };
-
   setUid = (uid) => {
     this.setState({
       uid: uid || this.defaultUid
