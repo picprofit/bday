@@ -8,9 +8,6 @@ class Cards extends React.Component {
     cards: {},
   };
 
-  componentDidMount() {
-  }
-
   renderCardLink = (key) => {
     const cardLink = `card/${this.state.cards[key]}`;
     const editLink = `edit/${this.state.cards[key]}`;
