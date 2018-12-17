@@ -1,0 +1,11 @@
+import Rebase from 're-base';
+import firebase from 'firebase';
+import fireBaseConfig from './config';
+
+const firebaseApp = firebase.initializeApp(fireBaseConfig);
+
+const db = Rebase.createClass(firebaseApp.database());
+
+export {firebaseApp};
+
+export default db;

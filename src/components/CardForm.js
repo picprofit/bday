@@ -1,0 +1,100 @@
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import {calculateAge} from '../helpers';
+
+class CardForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      age: this.props.age,
+      birthday: this.props.birthday,
+      name: this.props.name,
+      from: this.props.from,
+      text: this.props.text
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps !== this.props) {
+      this.setState({
+        age: this.props.age,
+        birthday: this.props.birthday,
+        name: this.props.name,
+        from: this.props.from,
+        text: this.props.text
+      });
+    }
+  }
+
+  dateHandler = birthday => {
+    const age = calculateAge(birthday);
+    // this.props.updateData(age, birthday);
+    this.setState({
+      age,
+      birthday
+    });
+  };
+
+  inputHandler = event => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  submitHandler = event => {
+    event.preventDefault();
+    //${this.state.uid}/
+    const data = {
+      birthday: this.state.birthday.getTime(),
+      age: this.state.age,
+      name: this.state.name,
+      from: this.state.from,
+      text: this.state.text
+    };
+    this.props.saveCard(data);
+  };
+
+  render() {
+    return <React.Fragment>
+        <form onSubmit={this.submitHandler} className="text-left">
+          <div className="form-group form-inline">
+            <label htmlFor="datePicker">Select the birthday date</label>
+            {/*maxDate={new Date()}*/}
+            <DatePicker
+              onChange={this.dateHandler}
+              selected={this.state.birthday}
+              placeholderText="Click to select (your) birthday date"
+              withPortal
+              showYearDropdown
+              scrollableYearDropdown
+              showMonthDropdown
+              dropdownMode="select"
+              id="datePicker"
+              className="datePicker"
+            >
+              <div style={{color: 'green'}}>Select (your) birthday date!</div>
+            </DatePicker>
+            {/*<small id="datePickerHelp" className="form-text text-muted">Hello</small>*/}
+          </div>
+          <div className="form-group">
+            <label htmlFor="nameInput">To</label>
+            <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.name} name="name" className="form-control" onChange={this.inputHandler} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="nameInput">From</label>
+            <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.from} name="from" className="form-control" onChange={this.inputHandler} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="textInput">Text</label>
+            <textarea id="textInput" cols="30" rows="10" placeholder="Text" className="form-control" name="text" onChange={this.inputHandler} value={this.state.text}/>
+          </div>
+          <input type="submit" value={this.props.button} className="btn btn-primary"/>
+        </form>
+    </React.Fragment>;
+  }
+}
+
+export default CardForm;
