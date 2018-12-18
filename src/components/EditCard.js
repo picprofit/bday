@@ -59,7 +59,7 @@ class EditCard extends React.Component {
     if (this.state.loaded) {
       let msg = "";
       if (this.state.saved) {
-        const cardUrl = `/card/${this.cardId}`;
+        const cardUrl = `card/${this.cardId}`;
         msg = <div className="alert alert-success" role="alert">
           Card saved. <a href={cardUrl}>View card</a>
         </div>;
