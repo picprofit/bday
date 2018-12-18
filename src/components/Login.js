@@ -1,7 +1,6 @@
 import React from 'react';
 import firebase from 'firebase';
 import {firebaseApp} from '../db';
-import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 class Login extends React.Component {
   state = {
@@ -58,23 +57,6 @@ class Login extends React.Component {
   };
 
   render () {
-    const transitionOptions = {
-      classNames: {
-        appear: 'my-appear',
-        appearActive: 'my-active-appear',
-        enter: 'my-enter',
-        enterActive: 'my-active-enter',
-        enterDone: 'my-done-enter',
-        exit: 'my-exit',
-        exitActive: 'my-active-exit',
-        exitDone: 'my-done-exit',
-      },
-      timeout: {
-        appear: 2000,
-        enter: 2000,
-        exit: 2000
-      }
-    };
     let errors = "";
     if(this.state.error) {
       errors = <p className="alert alert-warning animage-appear">{this.state.errorMessage}</p>;
