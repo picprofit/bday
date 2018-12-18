@@ -10,11 +10,11 @@ import NotFound from '../components/NotFound';
 const Router = () => (
   <BrowserRouter basename={'/bday'}>
     <Switch>
-      <Route exact path="/" component={Intro} />
-      <Route exact path="/faq" component={Faq} />
-      <Route exact path="/cards/" component={Cards} />
-      <Route path="/card/:cardId" component={App} />
-      <Route path="/edit/:cardId" component={EditCard} />
+      <Route exact path="/" component={Intro}/>
+      <Route exact path="/faq" component={Faq}/>
+      <Route exact path="/cards/" component={Cards}/>
+      <Route path="/card/:cardId" component={App}/>
+      <Route path="/edit/:cardId" component={EditCard}/>
       <Route component={NotFound}/>
     </Switch>
   </BrowserRouter>

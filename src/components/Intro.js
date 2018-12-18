@@ -43,15 +43,8 @@ class Intro extends React.Component {
           <div className="col-md-6 col-md-offset-3 text-center">
             <h2>Create a birthday card in one click</h2>
             <h3>With a Pic Of The Day from NASA and fun fact about an age and date</h3>
-            <CardForm
-              age="0"
-              birthday={new Date()}
-              name=""
-              from="Anonym"
-              text="Happy birthday!"
-              button="Create card!"
-              saveCard={this.saveCard}
-            />
+            <CardForm age="0" birthday={new Date()} name="" from="Anonym" text="Happy birthday!"
+                      button="Create card!" saveCard={this.saveCard}/>
           </div>
           <div className="col-md-6 col-md-offset-3">
             <Login setUid={this.setUid}/>

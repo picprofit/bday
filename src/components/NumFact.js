@@ -10,11 +10,13 @@ class NumFact extends React.Component {
       fact: ""
     };
   }
+
   componentDidMount() {
     this.getAgeFact();
   }
+
   componentDidUpdate(prevProps) {
-    if(prevProps.age !== this.props.age) {
+    if (prevProps.age !== this.props.age) {
       this.getAgeFact();
     }
   }
@@ -49,7 +51,7 @@ class NumFact extends React.Component {
   };
 
   render() {
-    if(this.state.fact.length > 0) {
+    if (this.state.fact.length > 0) {
       return <React.Fragment>
         <p><b>Here some fact about your age:</b> {this.state.fact}</p>
       </React.Fragment>;

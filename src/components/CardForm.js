@@ -15,7 +15,7 @@ class CardForm extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps !== this.props) {
+    if (prevProps !== this.props) {
       this.setState({
         age: this.props.age,
         birthday: this.props.birthday,
@@ -57,38 +57,33 @@ class CardForm extends React.Component {
 
   render() {
     return <React.Fragment>
-        <form onSubmit={this.submitHandler} className="text-left">
-          <div className="form-group form-inline">
-            <label htmlFor="datePicker">Select the birthday date</label>
-            <DatePicker
-              onChange={this.dateHandler}
-              selected={this.state.birthday}
-              placeholderText="Click to select (your) birthday date"
-              withPortal
-              showYearDropdown
-              scrollableYearDropdown
-              showMonthDropdown
-              dropdownMode="select"
-              id="datePicker"
-              className="datePicker"
-            >
-              <div style={{color: 'green'}}>Select (your) birthday date!</div>
-            </DatePicker>
-          </div>
-          <div className="form-group">
-            <label htmlFor="nameInput">To</label>
-            <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.name} name="name" className="form-control" onChange={this.inputHandler} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="nameInput">From</label>
-            <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.from} name="from" className="form-control" onChange={this.inputHandler} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="textInput">Text</label>
-            <textarea id="textInput" cols="30" rows="10" placeholder="Text" className="form-control" name="text" onChange={this.inputHandler} value={this.state.text}/>
-          </div>
-          <input type="submit" value={this.props.button} className="btn btn-primary"/>
-        </form>
+      <form onSubmit={this.submitHandler} className="text-left">
+        <div className="form-group form-inline">
+          <label htmlFor="datePicker">Select the birthday date</label>
+          <DatePicker onChange={this.dateHandler} selected={this.state.birthday}
+                      placeholderText="Click to select (your) birthday date" withPortal
+                      showYearDropdown scrollableYearDropdown showMonthDropdown
+                      dropdownMode="select" id="datePicker" className="datePicker">
+            <div style={{color: 'green'}}>Select (your) birthday date!</div>
+          </DatePicker>
+        </div>
+        <div className="form-group">
+          <label htmlFor="nameInput">To</label>
+          <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.name}
+                 name="name" className="form-control" onChange={this.inputHandler}/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="nameInput">From</label>
+          <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.from}
+                 name="from" className="form-control" onChange={this.inputHandler}/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="textInput">Text</label>
+          <textarea id="textInput" cols="30" rows="10" placeholder="Text" className="form-control"
+                    name="text" onChange={this.inputHandler} value={this.state.text}/>
+        </div>
+        <input type="submit" value={this.props.button} className="btn btn-primary"/>
+      </form>
     </React.Fragment>;
   }
 }

@@ -37,7 +37,7 @@ class Cards extends React.Component {
   render() {
     const cardsKeys = Object.keys(this.state.cards);
     let Result = "";
-    if(this.state.uid == null) {
+    if (this.state.uid == null) {
       Result = <React.Fragment>
         <h1>Log in please to manage your cards</h1>
       </React.Fragment>;
@@ -51,7 +51,7 @@ class Cards extends React.Component {
           <h1>Your cards</h1>
           <table className="table table-striped table-hover">
             <tbody>
-              {cardsKeys.map(this.renderCardLink)}
+            {cardsKeys.map(this.renderCardLink)}
             </tbody>
           </table>
         </React.Fragment>;

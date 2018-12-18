@@ -25,7 +25,7 @@ class App extends React.Component {
       context: this,
       then(data){
         //check for empty
-        if(Object.keys(data).length === 0 && data.constructor === Object) {
+        if (Object.keys(data).length === 0 && data.constructor === Object) {
           this.setState({
             loaded: true,
             success: false
@@ -46,17 +46,11 @@ class App extends React.Component {
   }
 
   render() {
-    if(this.state.loaded && !this.state.success) {
+    if (this.state.loaded && !this.state.success) {
       return <NotFound text="Card not found"/>;
     }
-    return <Card
-          age={this.state.age}
-          birthday={this.state.birthday}
-          name={this.state.name}
-          from={this.state.from}
-          text={this.state.text}
-          loaded={this.state.loaded}
-        />;
+    return <Card age={this.state.age} birthday={this.state.birthday} name={this.state.name}
+                 from={this.state.from} text={this.state.text} loaded={this.state.loaded}/>;
   }
 }
 

@@ -66,9 +66,8 @@ class EditCard extends React.Component {
       }
       if (this.state.uid === this.state.card.owner) {
         result = <React.Fragment>
-          <CardForm age={this.state.card.age} birthday={birthdayDate}
-                    name={this.state.card.name} from={this.state.card.from}
-                    text={this.state.card.text} button="Save card!"
+          <CardForm age={this.state.card.age} birthday={birthdayDate} name={this.state.card.name}
+                    from={this.state.card.from} text={this.state.card.text} button="Save card!"
                     saveCard={this.saveCard}/>
           {msg}
         </React.Fragment>;

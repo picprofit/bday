@@ -16,6 +16,7 @@ class NasaPicOfTheDay extends React.Component {
       }
     };
   };
+
   //"Date must be between Jun 16, 1995 and Dec 04, 2018."
   oldestDate = new Date(1995, 5, 16);
 
@@ -43,7 +44,7 @@ class NasaPicOfTheDay extends React.Component {
 
   getPicOfTheDay = (date) => {
     const self = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       self.setState({
         date,
         pic: {
@@ -82,7 +83,7 @@ class NasaPicOfTheDay extends React.Component {
     });
   };
 
-  getBirthdayPic = async () => {
+  getBirthdayPic = async() => {
     const date = this.props.date;
     const today = new Date();
     const thisYearDate = new Date(today.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 12);
@@ -99,23 +100,27 @@ class NasaPicOfTheDay extends React.Component {
     //first, try this year and birthday date pic
     this.getPicOfTheDay(thisYearDate)
       .then(
-        response => {},
+        response => {
+        },
         error => {
           //second, try pic of birthday year
           this.getPicOfTheDay(date)
             .then(
-              response => {},
+              response => {
+              },
               error => {
                 //last, get random pics from prev years
                 let minYear = this.oldestDate.getUTCFullYear();
-                if(date.getUTCFullYear() > this.oldestDate.getUTCFullYear()) {
+                if (date.getUTCFullYear() > this.oldestDate.getUTCFullYear()) {
                   minYear = date.getUTCFullYear();
                 }
                 const randYear = getRandom(minYear, today.getUTCFullYear() - 1);
                 const randYearDate = new Date(randYear, date.getUTCMonth(), date.getUTCDate());
                 this.getPicOfTheDay(randYearDate).then(
-                  response => {},
-                  error => {}
+                  response => {
+                  },
+                  error => {
+                  }
                 );
               }
             );
@@ -134,9 +139,11 @@ class NasaPicOfTheDay extends React.Component {
                className="img-responsive"/>
           <figcaption className="figure-caption float-left">
             <blockquote className="blockquote">
-            <p className="mb-0">{this.state.pic.explanation}</p>
+              <p className="mb-0">{this.state.pic.explanation}</p>
               <footer className="blockquote-footer">
-                Foto of the day for {this.state.date.getUTCDate()}/{this.state.date.getUTCMonth() + 1}/{this.state.date.getUTCFullYear()} from <cite title="National Aeronautics and Space Administration, https://www.nasa.gov/">NASA</cite>
+                Foto of the day for {this.state.date.getUTCDate()}/{this.state.date.getUTCMonth() + 1}/{this.state.date.getUTCFullYear()} from
+                <cite
+                  title="National Aeronautics and Space Administration, https://www.nasa.gov/">NASA</cite>
               </footer>
             </blockquote>
           </figcaption>

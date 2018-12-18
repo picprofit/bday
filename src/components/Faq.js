@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Faq extends React.Component{
+class Faq extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,9 +20,9 @@ class Faq extends React.Component{
           <div className="col-md-12">
             <h1>FAQ</h1>
             <ul>
-            {Object.keys(this.state.faq).map(
-              key => <li key={key}><p><b>{key}</b><br/>{this.state.faq[key]}</p></li>
-            )}
+              {Object.keys(this.state.faq).map(
+                key => <li key={key}><p><b>{key}</b><br/>{this.state.faq[key]}</p></li>
+              )}
             </ul>
           </div>
         </div>

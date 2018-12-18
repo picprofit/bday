@@ -14,9 +14,10 @@ class DateFact extends React.Component {
   componentDidMount() {
     this.getDateFact();
   }
+
   componentDidUpdate(prevProps) {
-    if(prevProps.date !== this.props.date) {
-        this.getDateFact();
+    if (prevProps.date !== this.props.date) {
+      this.getDateFact();
     }
   }
 
@@ -48,7 +49,7 @@ class DateFact extends React.Component {
   };
 
   render() {
-    if(this.state.fact.length > 0) {
+    if (this.state.fact.length > 0) {
       return <React.Fragment>
         <p><b>Did you know,</b> {this.state.fact}</p>
       </React.Fragment>;

@@ -13,7 +13,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
+      if (user) {
         this.authHandler({user});
       }
       this.setState({
@@ -30,11 +30,11 @@ class Login extends React.Component {
       .then(() => {
         this.authHandler();
       }).catch((error) => {
-        this.setState({
-          error: true,
-          errorMessage: error.message
-        });
+      this.setState({
+        error: true,
+        errorMessage: error.message
       });
+    });
   };
 
   authHandler = (authData) => {
@@ -47,7 +47,7 @@ class Login extends React.Component {
     this.props.setUid(user.uid);
   };
 
-  logout = async () => {
+  logout = async() => {
     await firebase.auth().signOut();
     this.setState({
       uid: null,
@@ -56,12 +56,12 @@ class Login extends React.Component {
     this.props.setUid();
   };
 
-  render () {
+  render() {
     let errors = "";
-    if(this.state.error) {
+    if (this.state.error) {
       errors = <p className="alert alert-warning animage-appear">{this.state.errorMessage}</p>;
     }
-    if(this.state.loaded) {
+    if (this.state.loaded) {
       if (this.state.uid == null) {
         return <nav className="login">
           <p className="alert alert-info">Sign in to manage your cards</p>
@@ -80,7 +80,8 @@ class Login extends React.Component {
         return <React.Fragment>
           <div className="alert alert-light" role="alert">
             Logged in as {this.state.displayName}
-            <button className="bn btn-primary btn-sm btn-login" onClick={this.logout}>Logout</button>
+            <button className="bn btn-primary btn-sm btn-login" onClick={this.logout}>Logout
+            </button>
           </div>
         </React.Fragment>
       }
