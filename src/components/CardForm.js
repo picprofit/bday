@@ -5,24 +5,12 @@ import {calculateAge} from '../helpers';
 class CardForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      age: this.props.age,
-      birthday: this.props.birthday,
-      name: this.props.name,
-      from: this.props.from,
-      text: this.props.text
-    };
+    this.state = {...this.props};
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps !== this.props) {
-      this.setState({
-        age: this.props.age,
-        birthday: this.props.birthday,
-        name: this.props.name,
-        from: this.props.from,
-        text: this.props.text
-      });
+      this.setState({...this.props});
     }
   }
 
@@ -56,6 +44,12 @@ class CardForm extends React.Component {
   };
 
   render() {
+    let errorBlock = '';
+    if(this.state.lastError.length > 0) {
+      errorBlock = <div className='alert alert-warning'>
+        {this.state.lastError}
+      </div>;
+    }
     return <React.Fragment>
       <form onSubmit={this.submitHandler} className="text-left">
         <div className="form-group form-inline">
@@ -84,6 +78,7 @@ class CardForm extends React.Component {
         </div>
         <input type="submit" value={this.props.button} className="btn btn-primary"/>
       </form>
+      {errorBlock}
     </React.Fragment>;
   }
 }

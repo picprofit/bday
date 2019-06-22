@@ -38,7 +38,7 @@ class NasaPicOfTheDay extends React.Component {
 
   //"Date must be between Jun 16, 1995 and Dec 04, 2018."
   validDate = (date) => {
-    const today = new Date();
+    const today = new Date().setHours(23, 59, 59);
     return (this.oldestDate <= date && date <= today);
   };
 
@@ -54,7 +54,8 @@ class NasaPicOfTheDay extends React.Component {
         }
       });
       if (!self.validDate(date)) {
-        reject("invalid date");
+        const error = new Error("invalid date");
+        return reject(error);
       }
       //date	YYYY-MM-DD
       const apiKey = 'u6BZiUC8WyYcFuWIHLkGRZiBcZj6iPJbzK0Bh50h';
@@ -115,7 +116,7 @@ class NasaPicOfTheDay extends React.Component {
                   minYear = date.getUTCFullYear();
                 }
                 const randYear = getRandom(minYear, today.getUTCFullYear() - 1);
-                const randYearDate = new Date(randYear, date.getUTCMonth(), date.getUTCDate());
+                const randYearDate = new Date(randYear, date.getUTCMonth(), date.getUTCDate(), 12);
                 this.getPicOfTheDay(randYearDate).then(
                   response => {
                   },
@@ -141,9 +142,8 @@ class NasaPicOfTheDay extends React.Component {
             <blockquote className="blockquote">
               <p className="mb-0">{this.state.pic.explanation}</p>
               <footer className="blockquote-footer">
-                Foto of the day for {this.state.date.getUTCDate()}/{this.state.date.getUTCMonth() + 1}/{this.state.date.getUTCFullYear()} from
-                <cite
-                  title="National Aeronautics and Space Administration, https://www.nasa.gov/">NASA</cite>
+                Foto of the day for {this.state.date.getUTCDate()}/{this.state.date.getUTCMonth() + 1}/{this.state.date.getUTCFullYear()} from&nbsp;
+                <cite title="National Aeronautics and Space Administration, https://www.nasa.gov/">NASA</cite>
               </footer>
             </blockquote>
           </figcaption>

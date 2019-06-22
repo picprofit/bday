@@ -2,9 +2,49 @@ import React from 'react';
 import NumFact from '../components/NumFact';
 import DateFact from '../components/DateFact';
 import NasaPicOfTheDay from '../components/NasaPicOfTheDay';
-import PropTypes from 'prop-types';
+import db from "../db";
+import NotFound from "./App";
 
 class Card extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      age: 0,
+      birthday: new Date(),
+      name: "",
+      from: "",
+      text: "",
+      loaded: false,
+      success: false
+    };
+  }
+
+  componentDidMount() {
+    const cardId = this.props.match.params.cardId;
+    db.fetch(`cards/${cardId}`, {
+      context: this,
+      then(data){
+        //check for empty
+        if (Object.keys(data).length === 0 && data.constructor === Object) {
+          this.setState({
+            loaded: true,
+            success: false
+          })
+        } else {
+          this.setState({
+            birthday: new Date(data.birthday),
+            age: data.age,
+            name: data.name,
+            from: data.from,
+            text: data.text,
+            loaded: true,
+            success: true
+          });
+        }
+      }
+    });
+  }
+
   happyBirthday = () => {
     if (this.props.age > 0) {
       return (<React.Fragment>Happy <b>{this.props.age}</b> birthday!</React.Fragment>);
@@ -24,11 +64,14 @@ class Card extends React.Component {
   };
 
   render() {
-    let from = "";
-    if (this.props.from.length > 0) {
-      from = <p className="signed text-right">From {this.props.from}</p>;
+    if (this.state.loaded && !this.state.success) {
+      return <NotFound text="Card not found"/>;
     }
-    if (this.props.loaded) {
+    let from = "";
+    if (this.state.from.length > 0) {
+      from = <p className="signed text-right">From {this.state.from}</p>;
+    }
+    if (this.state.loaded) {
       return <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -38,16 +81,16 @@ class Card extends React.Component {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-md-12 text-center">
-                        <h1>{this.props.name}</h1>
+                        <h1>{this.state.name}</h1>
                         <h2>{this.happyBirthday()}</h2>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p>{this.props.text}</p>
-                        <NumFact age={this.props.age}/>
-                        <DateFact date={this.props.birthday}/>
-                        <NasaPicOfTheDay date={this.props.birthday}/>
+                        <p>{this.state.text}</p>
+                        <NumFact age={this.state.age}/>
+                        <DateFact date={this.state.birthday}/>
+                        <NasaPicOfTheDay date={this.state.birthday}/>
                       </div>
                     </div>
                   </div>
@@ -85,14 +128,5 @@ class Card extends React.Component {
     }
   }
 }
-
-Card.propTypes = {
-  age: PropTypes.number,
-  birthday: PropTypes.object,
-  name: PropTypes.string,
-  from: PropTypes.string,
-  text: PropTypes.string,
-  loaded: PropTypes.bool,
-};
 
 export default Card;

@@ -1,6 +1,7 @@
 import React from 'react';
 import db from '../db';
 import Login from '../components/Login';
+import { Link } from 'react-router-dom';
 
 class Cards extends React.Component {
   state = {
@@ -13,10 +14,10 @@ class Cards extends React.Component {
     const editLink = `edit/${this.state.cards[key]}`;
     return <tr key={key}>
       <td>
-        <a href={cardLink}>{this.state.cards[key]}</a>
+        <Link to={cardLink}>{this.state.cards[key]}</Link>
       </td>
       <td>
-        <a href={editLink}>edit</a>
+        <Link to={editLink}>edit</Link>
       </td>
     </tr>;
   };
@@ -44,7 +45,9 @@ class Cards extends React.Component {
     } else {
       Result = <React.Fragment>
         <h1>No cards found</h1>
-        <a href="">Try to add one for the beginning?</a>
+        <Link to='/'>
+        Try to add one for the beginning?
+        </Link>
       </React.Fragment>;
       if (cardsKeys.length > 0) {
         Result = <React.Fragment>
