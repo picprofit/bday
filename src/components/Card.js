@@ -1,23 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import NumFact from '../components/NumFact';
 import DateFact from '../components/DateFact';
 import NasaPicOfTheDay from '../components/NasaPicOfTheDay';
 import db from "../db";
 import NotFound from "./App";
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      age: 0,
-      birthday: new Date(),
-      name: "",
-      from: "",
-      text: "",
-      loaded: false,
-      success: false
-    };
-  }
+const Card = (props) => {
+  const [cardParams, setCardParams] = useState({
+    age: 0,
+    birthday: new Date(),
+    name: "",
+    from: "",
+    text: "",
+    loaded: false,
+    success: false
+  });
 
   componentDidMount() {
     const cardId = this.props.match.params.cardId;
