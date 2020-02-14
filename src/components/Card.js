@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import NumFact from '../components/NumFact';
 import DateFact from '../components/DateFact';
 import NasaPicOfTheDay from '../components/NasaPicOfTheDay';
@@ -6,7 +6,10 @@ import db from "../db";
 import NotFound from "./App";
 
 const Card = (props) => {
-  const [cardParams, setCardParams] = useState({
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const
+  const [cardData, setCardData] = useState({
     age: 0,
     birthday: new Date(),
     name: "",
@@ -15,35 +18,33 @@ const Card = (props) => {
     loaded: false,
     success: false
   });
-
-  componentDidMount() {
-    const cardId = this.props.match.params.cardId;
+  
+  useEffect(() => {
+    const cardId = props.match.params.cardId;
     db.fetch(`cards/${cardId}`, {
       context: this,
-      then(data){
+      then(data) {
         //check for empty
         if (Object.keys(data).length === 0 && data.constructor === Object) {
-          this.setState({
-            loaded: true,
-            success: false
-          })
+          setError(true);
         } else {
-          this.setState({
+          setCardData({
             birthday: new Date(data.birthday),
             age: data.age,
             name: data.name,
             from: data.from,
             text: data.text,
-            loaded: true,
-            success: true
           });
+          setError(false);
         }
+        setLoading(false);
       }
     });
-  }
+  }, []);
 
+  
   happyBirthday = () => {
-    if (this.props.age > 0) {
+    if (props.age > 0) {
       return (<React.Fragment>Happy <b>{this.props.age}</b> birthday!</React.Fragment>);
     }
     else return (<React.Fragment>Happy birthday!</React.Fragment>);
