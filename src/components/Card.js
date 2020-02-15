@@ -7,7 +7,7 @@ import NotFound from "./App";
 
 const Card = (props) => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [hasError, setError] = useState(false);
   const
   const [cardData, setCardData] = useState({
     age: 0,
@@ -15,8 +15,6 @@ const Card = (props) => {
     name: "",
     from: "",
     text: "",
-    loaded: false,
-    success: false
   });
   
   useEffect(() => {
@@ -45,9 +43,9 @@ const Card = (props) => {
   
   happyBirthday = () => {
     if (props.age > 0) {
-      return (<React.Fragment>Happy <b>{this.props.age}</b> birthday!</React.Fragment>);
+      return (<>Happy <b>{props.age}</b> birthday!</>);
     }
-    else return (<React.Fragment>Happy birthday!</React.Fragment>);
+    else return (<>Happy birthday!</>);
   };
 
   handleOpen = () => {
@@ -62,14 +60,11 @@ const Card = (props) => {
   };
 
   render() {
-    if (this.state.loaded && !this.state.success) {
+    if (!loading && !hasError) {
       return <NotFound text="Card not found"/>;
     }
-    let from = "";
-    if (this.state.from.length > 0) {
-      from = <p className="signed text-right">From {this.state.from}</p>;
-    }
-    if (this.state.loaded) {
+    const from = cardData["from"] . length > 0 ? <p className="signed text-right">From {this.state.from}</p> : "";
+    if (!loading) {
       return <div className="container">
         <div className="row">
           <div className="col-md-12">
