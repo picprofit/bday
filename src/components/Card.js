@@ -74,16 +74,16 @@ const Card = (props) => {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-md-12 text-center">
-                        <h1>{this.state.name}</h1>
-                        <h2>{this.happyBirthday()}</h2>
+                        <h1>{cardData["name"]}</h1>
+                        <h2>{happyBirthday()}</h2>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p>{this.state.text}</p>
-                        <NumFact age={this.state.age}/>
-                        <DateFact date={this.state.birthday}/>
-                        <NasaPicOfTheDay date={this.state.birthday}/>
+                        <p>{cardData["text"]}</p>
+                        <NumFact age={cardData["age"]}/>
+                        <DateFact date={cardData["birthday"]}/>
+                        <NasaPicOfTheDay date={cardData["birthday"]}/>
                       </div>
                     </div>
                   </div>
@@ -110,7 +110,7 @@ const Card = (props) => {
             <div id="card">
               <div id="card-front">
                 <div className="wrap">
-                  <h1>{this.happyBirthday()}</h1>
+                  <h1>{happyBirthday()}</h1>
                   <h2>loading...</h2>
                 </div>
               </div>
