@@ -20,7 +20,7 @@ const Card = (props) => {
   useEffect(() => {
     const cardId = props.match.params.cardId;
     db.fetch(`cards/${cardId}`, {
-      context: this,
+      // context: this, ?
       then(data) {
         //check for empty
         if (Object.keys(data).length === 0 && data.constructor === Object) {
@@ -63,7 +63,7 @@ const Card = (props) => {
     if (!loading && !hasError) {
       return <NotFound text="Card not found"/>;
     }
-    const from = cardData["from"] . length > 0 ? <p className="signed text-right">From {this.state.from}</p> : "";
+    const from = cardData["from"] . length > 0 ? <p className="signed text-right">From {cardData["from"]}</p> : "";
     if (!loading) {
       return <div className="container">
         <div className="row">
@@ -93,9 +93,9 @@ const Card = (props) => {
 
               <div id="card-front">
                 <div className="wrap">
-                  <h1>{this.happyBirthday()}</h1>
+                  <h1>{happyBirthday()}</h1>
                   <div className="button-wrap">
-                    <button id="open" onClick={this.handleOpen}>Click me</button>
+                    <button id="open" onClick={handleOpen}>Click me</button>
                   </div>
                 </div>
               </div>
