@@ -8,7 +8,6 @@ import NotFound from "./App";
 const Card = (props) => {
   const [loading, setLoading] = useState(true);
   const [hasError, setError] = useState(false);
-  const
   const [cardData, setCardData] = useState({
     age: 0,
     birthday: new Date(),
