@@ -40,14 +40,14 @@ const Card = (props) => {
   }, []);
 
   
-  happyBirthday = () => {
+  const happyBirthday = () => {
     if (props.age > 0) {
       return (<>Happy <b>{props.age}</b> birthday!</>);
     }
-    else return (<>Happy birthday!</>);
+    return (<>Happy birthday!</>);
   };
 
-  handleOpen = () => {
+  const handleOpen = () => {
     const card = document.getElementById("card");
     let timer = null;
     card.setAttribute('class', 'open-half');
