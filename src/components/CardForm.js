@@ -1,12 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import {calculateAge} from '../helpers';
 
-class CardForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {...this.props};
-  }
+const CardForm = (props) => {
+  const [state, setState] = useState(props);
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps !== this.props) {
