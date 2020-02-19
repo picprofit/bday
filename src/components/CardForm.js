@@ -5,25 +5,22 @@ import {calculateAge} from '../helpers';
 const CardForm = (props) => {
   const [state, setState] = useState(props);
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps !== this.props) {
-      this.setState({...this.props});
-    }
-  }
+//  componentDidUpdate(prevProps, prevState, snapshot) {
+//    if (prevProps !== this.props) {
+//      this.setState({...this.props});
+//    }
+//  }
 
-  dateHandler = birthday => {
-    const age = calculateAge(birthday);
-    this.setState({
-      age,
+  const dateHandler = birthday => {
+    setState({
+      calculateAge(birthday),
       birthday
     });
   };
 
-  inputHandler = event => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({
+  const inputHandler = { target } => {
+    const { value, name } = target;
+    setState({
       [name]: value
     });
   };
