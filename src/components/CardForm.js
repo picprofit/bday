@@ -25,30 +25,29 @@ const CardForm = (props) => {
     });
   };
 
-  submitHandler = event => {
+  const submitHandler = event => {
     event.preventDefault();
     const data = {
-      birthday: this.state.birthday.getTime(),
-      age: this.state.age,
-      name: this.state.name,
-      from: this.state.from,
-      text: this.state.text
+      birthday: state.birthday.getTime(),
+      age: state.age,
+      name: state.name,
+      from: state.from,
+      text: state.text
     };
-    this.props.saveCard(data);
+    props.saveCard(data);
   };
 
-  render() {
-    let errorBlock = '';
-    if(this.state.lastError.length > 0) {
+  
+    const errorBlock = state.lastError.length > 0 ? 
       errorBlock = <div className='alert alert-warning'>
         {this.state.lastError}
-      </div>;
-    }
-    return <React.Fragment>
-      <form onSubmit={this.submitHandler} className="text-left">
+      </div> : null;
+    
+    return <>
+      <form onSubmit={submitHandler} className="text-left">
         <div className="form-group form-inline">
           <label htmlFor="datePicker">Select the birthday date</label>
-          <DatePicker onChange={this.dateHandler} selected={this.state.birthday}
+          <DatePicker onChange={dateHandler} selected={state.birthday}
                       placeholderText="Click to select (your) birthday date" withPortal
                       showYearDropdown scrollableYearDropdown showMonthDropdown
                       dropdownMode="select" id="datePicker" className="datePicker">
@@ -57,24 +56,24 @@ const CardForm = (props) => {
         </div>
         <div className="form-group">
           <label htmlFor="nameInput">To</label>
-          <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.name}
-                 name="name" className="form-control" onChange={this.inputHandler}/>
+          <input type="text" id="nameInput" placeholder="Name" defaultValue={state.name}
+                 name="name" className="form-control" onChange={inputHandler}/>
         </div>
         <div className="form-group">
           <label htmlFor="nameInput">From</label>
-          <input type="text" id="nameInput" placeholder="Name" defaultValue={this.state.from}
-                 name="from" className="form-control" onChange={this.inputHandler}/>
+          <input type="text" id="nameInput" placeholder="Name" defaultValue={state.from}
+                 name="from" className="form-control" onChange={inputHandler}}/>
         </div>
         <div className="form-group">
           <label htmlFor="textInput">Text</label>
           <textarea id="textInput" cols="30" rows="10" placeholder="Text" className="form-control"
-                    name="text" onChange={this.inputHandler} value={this.state.text}/>
+                    name="text" onChange={inputHandler} value={state.text}/>
         </div>
-        <input type="submit" value={this.props.button} className="btn btn-primary"/>
+        <input type="submit" value={props.button} className="btn btn-primary"/>
       </form>
       {errorBlock}
-    </React.Fragment>;
-  }
+    </>;
+ 
 }
 
 export default CardForm;
