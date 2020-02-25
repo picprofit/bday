@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Footer extends Component {
-  render() {
+const Footer = () => {
     return (
       <footer className="footer">
         <div className="container">
@@ -33,7 +32,6 @@ class Footer extends Component {
         </div>
       </footer>
     );
-  }
 }
 
 export default Footer;
