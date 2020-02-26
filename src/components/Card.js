@@ -1,58 +1,50 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import NumFact from '../components/NumFact';
 import DateFact from '../components/DateFact';
 import NasaPicOfTheDay from '../components/NasaPicOfTheDay';
 import db from "../db";
 import NotFound from "./App";
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      age: 0,
-      birthday: new Date(),
-      name: "",
-      from: "",
-      text: "",
-      loaded: false,
-      success: false
-    };
-  }
-
-  componentDidMount() {
-    const cardId = this.props.match.params.cardId;
+const Card = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [hasError, setError] = useState(false);
+  const [cardData, setCardData] = useState({
+    age: 0,
+    birthday: new Date(),
+    name: "",
+    from: "",
+    text: "",
+  });
+  
+  useEffect(() => {
+    const cardId = props.match.params.cardId;
     db.fetch(`cards/${cardId}`, {
-      context: this,
-      then(data){
+      // context: this, ?
+      then(data) {
         //check for empty
         if (Object.keys(data).length === 0 && data.constructor === Object) {
-          this.setState({
-            loaded: true,
-            success: false
-          })
+          setError(true);
         } else {
-          this.setState({
+          setCardData({
             birthday: new Date(data.birthday),
             age: data.age,
             name: data.name,
             from: data.from,
             text: data.text,
-            loaded: true,
-            success: true
           });
+          setError(false);
         }
+        setLoading(false);
       }
     });
-  }
+  }, []);
 
-  happyBirthday = () => {
-    if (this.props.age > 0) {
-      return (<React.Fragment>Happy <b>{this.props.age}</b> birthday!</React.Fragment>);
-    }
-    else return (<React.Fragment>Happy birthday!</React.Fragment>);
+  
+  const happyBirthday = (age) => {
+    return (age > 0) ? <>Happy <b>{age}</b> birthday!</>) : <>Happy birthday!</>);
   };
 
-  handleOpen = () => {
+  const handleOpen = () => {
     const card = document.getElementById("card");
     let timer = null;
     card.setAttribute('class', 'open-half');
@@ -63,15 +55,11 @@ class Card extends React.Component {
     }, 1000);
   };
 
-  render() {
-    if (this.state.loaded && !this.state.success) {
+    if (!loading & & !hasError) {
       return <NotFound text="Card not found"/>;
     }
-    let from = "";
-    if (this.state.from.length > 0) {
-      from = <p className="signed text-right">From {this.state.from}</p>;
-    }
-    if (this.state.loaded) {
+    const from = cardData["from"] . length > 0 ? <p className="signed text-right">From {cardData["from"]}</p> : "";
+    if (!loading) {
       return <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -81,16 +69,16 @@ class Card extends React.Component {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-md-12 text-center">
-                        <h1>{this.state.name}</h1>
-                        <h2>{this.happyBirthday()}</h2>
+                        <h1>{cardData["name"]}</h1>
+                        <h2>{happyBirthday(props.age)}</h2>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p>{this.state.text}</p>
-                        <NumFact age={this.state.age}/>
-                        <DateFact date={this.state.birthday}/>
-                        <NasaPicOfTheDay date={this.state.birthday}/>
+                        <p>{cardData["text"]}</p>
+                        <NumFact age={cardData["age"]}/>
+                        <DateFact date={cardData["birthday"]}/>
+                        <NasaPicOfTheDay date={cardData["birthday"]}/>
                       </div>
                     </div>
                   </div>
@@ -100,9 +88,9 @@ class Card extends React.Component {
 
               <div id="card-front">
                 <div className="wrap">
-                  <h1>{this.happyBirthday()}</h1>
+                  <h1>{happyBirthday(props.age)}</h1>
                   <div className="button-wrap">
-                    <button id="open" onClick={this.handleOpen}>Click me</button>
+                    <button id="open" onClick={handleOpen}>Click me</button>
                   </div>
                 </div>
               </div>
@@ -117,7 +105,7 @@ class Card extends React.Component {
             <div id="card">
               <div id="card-front">
                 <div className="wrap">
-                  <h1>{this.happyBirthday()}</h1>
+                  <h1>{happyBirthday(props.age)}</h1>
                   <h2>loading...</h2>
                 </div>
               </div>
@@ -125,7 +113,6 @@ class Card extends React.Component {
           </div>
         </div>
       </div>
-    }
   }
 }
 

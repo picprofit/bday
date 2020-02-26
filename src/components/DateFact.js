@@ -1,28 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import PropTypes from 'prop-types';
 
-class DateFact extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: props.date,
+const DateFact = (date}) => {
+  const [state, setState] = useState({
+      date: date,
       fact: ""
-    };
-  }
+    });
 
-  componentDidMount() {
-    this.getDateFact();
-  }
+useEffect(() => {
+  getDateFact(date);
+}, [date]);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.date !== this.props.date) {
-      this.getDateFact();
-    }
-  }
-
-  getDateFact = () => {
-    const date = this.props.date;
+ const getDateFact = (date) => {
     const self = this;
     const dflt = "na";
     const url = `http://numbersapi.com/${date.getUTCMonth() + 1}/${date.getUTCDate()}/date?default=${dflt}`;
@@ -38,7 +28,7 @@ class DateFact extends React.Component {
         if (result === dflt) {
           result = "";
         }
-        self.setState({
+        setState({
           date,
           fact: result
         });
@@ -48,14 +38,10 @@ class DateFact extends React.Component {
       });
   };
 
-  render() {
-    if (this.state.fact.length > 0) {
-      return <React.Fragment>
-        <p><b>Did you know,</b> {this.state.fact}</p>
-      </React.Fragment>;
-    }
-    return (null);
-  }
+  
+    return state.fact.length > 0 ? <>
+        <p><b>Did you know,</b> {state.fact}</p>
+      </> : null;
 }
 
 DateFact.propTypes = {
