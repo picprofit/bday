@@ -13,7 +13,6 @@ const DateFact = ({ date }) => {
   }, [date]);
 
   const getDateFact = date => {
-    const self = this;
     const dflt = "na";
     const url = `http://numbersapi.com/${date.getUTCMonth() +
       1}/${date.getUTCDate()}/date?default=${dflt}`;

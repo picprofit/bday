@@ -17,7 +17,7 @@ const Card = props => {
   });
 
   useEffect(() => {
-    const cardId = props.match.params.cardId;
+    const { cardId } = props.match.params;
     db.fetch(`cards/${cardId}`, {
       // context: this, ?
       then(data) {
@@ -37,7 +37,7 @@ const Card = props => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [props.match.params.cardId]);
 
   const happyBirthday = age => {
     return age > 0 ? (
