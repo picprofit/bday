@@ -8,24 +8,20 @@ const Cards = () => {
   const [cards, setCards] = useState( {});
 
   useEffect(() => {
-    // db.syncState(`owners/${state.uid}`, {
-    //   //context: this, TODO
-    //   state: "cards"
-    // });
-
-    // console.log(state);
+    if(uid == null) {
+      return;
+    }
     const ref = db.syncState(`owners/${uid}`, {
       context: {
-        setCards,
-        state,
+        setState: ({ cards }) => setCards({ ...cards }),
+        state: { cards },
       },
       state: "cards"
     });
-    console.log(cards);
     return () => {
       db.removeBinding(ref);
     }
-  }, []);
+  }, [uid]);
 
   const renderCardLink = key => {
     const cardLink = `card/${cards[key]}`;
@@ -42,8 +38,6 @@ const Cards = () => {
     );
   };
 
-  console.log("cards");
-  console.log(cards);
   const cardsKeys = Object.keys(cards);
   const Result =
     uid == null ? (
