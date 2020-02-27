@@ -15,29 +15,32 @@ const Card = props => {
     from: "",
     text: ""
   });
+  const { cardId } = props.match.params;
 
   useEffect(() => {
-    const { cardId } = props.match.params;
-    db.fetch(`cards/${cardId}`, {
-      // context: this, ?
-      then(data) {
-        //check for empty
-        if (Object.keys(data).length === 0 && data.constructor === Object) {
-          setError(true);
-        } else {
-          setCardData({
-            birthday: new Date(data.birthday),
-            age: data.age,
-            name: data.name,
-            from: data.from,
-            text: data.text
-          });
-          setError(false);
+    if(loading) {
+      db.fetch(`cards/${cardId}`, {
+        context: {},
+        then(data) {
+          //check for empty
+          if (Object.keys(data).length === 0 && data.constructor === Object) {
+            setError(true);
+          } else {
+            console.log(data);
+            setCardData({
+              birthday: new Date(data.birthday),
+              age: data.age,
+              name: data.name,
+              from: data.from,
+              text: data.text
+            });
+            setError(false);
+          }
+          setLoading(false);
         }
-        setLoading(false);
-      }
-    });
-  }, [props.match.params.cardId]);
+      });
+    }
+  }, [cardId]);
 
   const happyBirthday = age => {
     return age > 0 ? (
@@ -60,7 +63,7 @@ const Card = props => {
     }, 1000);
   };
 
-  if (!loading && !hasError) {
+  if (!loading && hasError) {
     return <NotFound text="Card not found" />;
   }
   const from =
@@ -69,50 +72,7 @@ const Card = props => {
     ) : (
       ""
     );
-  if (!loading) {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <div id="card">
-              <div id="card-inside">
-                <div className="wrap">
-                  <div className="container-fluid">
-                    <div className="row">
-                      <div className="col-md-12 text-center">
-                        <h1>{cardData["name"]}</h1>
-                        <h2>{happyBirthday(props.age)}</h2>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <p>{cardData["text"]}</p>
-                        <NumFact age={cardData["age"]} />
-                        <DateFact date={cardData["birthday"]} />
-                        <NasaPicOfTheDay date={cardData["birthday"]} />
-                      </div>
-                    </div>
-                  </div>
-                  {from}
-                </div>
-              </div>
-
-              <div id="card-front">
-                <div className="wrap">
-                  <h1>{happyBirthday(props.age)}</h1>
-                  <div className="button-wrap">
-                    <button id="open" onClick={handleOpen}>
-                      Click me
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  } else {
+  if (loading) {
     return (
       <div className="container-fluid">
         <div className="row">
@@ -120,7 +80,7 @@ const Card = props => {
             <div id="card">
               <div id="card-front">
                 <div className="wrap">
-                  <h1>{happyBirthday(props.age)}</h1>
+                  <h1>{happyBirthday(cardData["age"])}</h1>
                   <h2>loading...</h2>
                 </div>
               </div>
@@ -130,6 +90,55 @@ const Card = props => {
       </div>
     );
   }
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12">
+          <div id="card">
+
+            <div id="card-inside">
+              <div className="wrap">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-md-12 text-center">
+                      <h1>{cardData["name"]}</h1>
+                      <h2>{happyBirthday(cardData["age"])}</h2>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <p>{cardData["text"]}</p>
+                      <NumFact age={cardData["age"]} />
+                      <DateFact date={cardData["birthday"]} />
+                      <NasaPicOfTheDay date={cardData["birthday"]} />
+                    </div>
+                  </div>
+                </div>
+                {from}
+              </div>
+            </div>
+
+            <div id="card-front">
+              <div className="wrap">
+                <h1>{happyBirthday(cardData["age"])}</h1>
+                <div className="button-wrap">
+                  <button
+                    id="open"
+                    onClick={() => {
+                      handleOpen();
+                    }}
+                  >
+                    Click me
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Card;
