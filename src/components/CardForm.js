@@ -31,9 +31,11 @@ const CardForm = props => {
     props.saveCard(data);
   };
 
+  const lastError = {props};
+
   const errorBlock =
-    state.lastError.length > 0 ? (
-      <div className="alert alert-warning">{this.state.lastError}</div>
+    lastError.length > 0 ? (
+      <div className="alert alert-warning">{lastError}</div>
     ) : null;
 
   return (
