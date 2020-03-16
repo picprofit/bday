@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+
 import Login from "../components/Login";
 import CardForm from "../components/CardForm";
 import db from "../db";
 
-const EditCard = ({ props }) => {
+//TODO: any
+const EditCard = (props) => {
   const [state, setState] = useState({
-    uid: null,
+    uid: "",
     card: {
       age: 0,
       birthday: new Date(),
@@ -23,14 +25,17 @@ const EditCard = ({ props }) => {
     syncWithDb();
   }, []);
 
-  const setUid = uid => {
+  const setUid = (uid) => {
     setState({
+      ...state,
       uid: uid
     });
   };
 
-  const saveCard = cardData => {
+  //TODO: any
+  const saveCard = (cardData) => {
     setState({
+      ...state,
       saved: false
     });
     cardData.owner = state.uid;
@@ -38,6 +43,7 @@ const EditCard = ({ props }) => {
       data: cardData
     }).then(() => {
       setState({
+        ...state,
         saved: true
       });
     });
@@ -45,26 +51,21 @@ const EditCard = ({ props }) => {
 
   const syncWithDb = () => {
     db.syncState(`cards/${cardId}`, {
-      // context: this,
       state: "card",
       then: () => {
-        setState({ loaded: true });
+        setState({ ...state, loaded: true });
       }
     });
   };
 
-  const birthdayDate = new Date(this.state.card.birthday);
+  const birthdayDate = new Date(state.card.birthday);
   let result = "...loading";
   if (state.loaded) {
-    let msg = "";
-    if (state.saved) {
-      const cardUrl = `card/${this.cardId}`;
-      msg = (
-        <div className="alert alert-success" role="alert">
-          Card saved. <a href={cardUrl}>View card</a>
-        </div>
-      );
-    }
+    const msg = state.saved ? (
+      <div className="alert alert-success" role="alert">
+        Card saved. <a href={`card/${cardId}`}>View card</a>
+      </div>
+    ) : null;
     if (state.uid === state.card.owner) {
       result = (
         <>

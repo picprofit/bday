@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
+
 import NumFact from "../components/NumFact";
 import DateFact from "../components/DateFact";
 import NasaPicOfTheDay from "../components/NasaPicOfTheDay";
 import db from "../db";
-import NotFound from "./App";
+import NotFound from "./NotFound";
 
-const Card = props => {
+interface ICard {
+  age: number;
+  birthday: Date;
+  name: string;
+  from: string;
+  text: string;
+};
+
+const Card = (props: any) => {
+  console.log(props);
   const [loading, setLoading] = useState(true);
   const [hasError, setError] = useState(false);
-  const [cardData, setCardData] = useState({
+  const [cardData, setCardData] = useState<ICard>({
     age: 0,
     birthday: new Date(),
     name: "",
     from: "",
     text: ""
   });
+  const [cardClasses, setCardClasses] = useState('');
   const { cardId } = props.match.params;
 
   useEffect(() => {
@@ -42,7 +53,7 @@ const Card = props => {
     }
   }, [cardId]);
 
-  const happyBirthday = age => {
+  const happyBirthday = (age: number): React.ReactNode => {
     return age > 0 ? (
       <>
         Happy <b>{age}</b> birthday!
@@ -53,18 +64,14 @@ const Card = props => {
   };
 
   const handleOpen = () => {
-    const card = document.getElementById("card");
-    let timer = null;
-    card.setAttribute("class", "open-half");
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(function() {
-      card.setAttribute("class", "open-fully");
-      timer = null;
+    setCardClasses("open-half");
+    setTimeout(function() {
+      setCardClasses("open-fully");
     }, 1000);
   };
 
   if (!loading && hasError) {
-    return <NotFound text="Card not found" />;
+    return <NotFound text="Card not found"  />;
   }
   const from =
     cardData["from"].length > 0 ? (
@@ -94,7 +101,7 @@ const Card = props => {
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <div id="card">
+          <div id="card" className={cardClasses}>
 
             <div id="card-inside">
               <div className="wrap">

@@ -1,9 +1,9 @@
 import React from 'react';
-import NotFound from '../components/NotFound';
-import Card from '../components/Card';
-
-import "react-datepicker/dist/react-datepicker.css";
 import { Route, Switch } from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
+
+import NotFound from './NotFound';
+import Card from './Card';
 import Intro from "./Intro";
 import Faq from "./Faq";
 import Cards from "./Cards";
@@ -20,7 +20,7 @@ class App extends React.Component {
         <Route exact path="/faq" component={Faq}/>
         <Route exact path="/cards/" component={Cards}/>
         <Route path="/card/:cardId" component={Card}/>
-        <Route path="/edit/:cardId" component={EditCard}/>
+        {/*<Route path="/edit/:cardId" component={EditCard}/>*/}
         <Route component={NotFound}/>
       </Switch>
       <Footer/>
