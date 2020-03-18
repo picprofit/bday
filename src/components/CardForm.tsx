@@ -1,41 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
+
 import { calculateAge } from "../helpers";
+import { ICard } from "../interfaces";
 
-const CardForm = props => {
-  const [state, setState] = useState(props);
+interface ICardForm extends ICard {
+  error: string;
+  button: string;
+  saveCard(cardData: ICard): {};
+}
 
-  const dateHandler = birthday => {
-    setState({
-      age: calculateAge(birthday),
-      birthday
+const CardForm: React.FC<{ props: ICardForm }> = ({ props }) => {
+  const { age, birthday, name, from, text, error, saveCard, button } = props;
+  const [cardData, setCardData] = useState<ICard>({
+    age,
+    birthday,
+    name,
+    from,
+    text
+  });
+
+  useEffect(() => {
+    setCardData({
+      ...cardData,
+      age: calculateAge(birthday)
     });
-  };
+  }, [birthday]);
 
   const inputHandler = ({ target }) => {
+    console.log(target);
     const { value, name } = target;
     setState({
       [name]: value
     });
   };
 
-  const submitHandler = event => {
+  const submitHandler = (event: Event) => {
     event.preventDefault();
-    const data = {
-      birthday: state.birthday.getTime(),
-      age: state.age,
-      name: state.name,
-      from: state.from,
-      text: state.text
-    };
-    props.saveCard(data);
+    saveCard(cardData);
   };
 
-  const lastError = {props};
-
   const errorBlock =
-    lastError.length > 0 ? (
-      <div className="alert alert-warning">{lastError}</div>
+      error.length > 0 ? (
+      <div className="alert alert-warning">{error}</div>
     ) : null;
 
   return (
@@ -44,8 +51,13 @@ const CardForm = props => {
         <div className="form-group form-inline">
           <label htmlFor="datePicker">Select the birthday date</label>
           <DatePicker
-            onChange={dateHandler}
-            selected={state.birthday}
+            onChange={(selectedDate: Date) => {
+              setCardData({
+                ...cardData,
+                birthday: selectedDate
+              });
+            }}
+            // selected={cardData.birthday}
             placeholderText="Click to select (your) birthday date"
             withPortal
             showYearDropdown
@@ -64,7 +76,7 @@ const CardForm = props => {
             type="text"
             id="nameInput"
             placeholder="Name"
-            defaultValue={state.name}
+            defaultValue={cardData.name}
             name="name"
             className="form-control"
             onChange={inputHandler}
@@ -76,7 +88,7 @@ const CardForm = props => {
             type="text"
             id="nameInput"
             placeholder="Name"
-            defaultValue={state.from}
+            defaultValue={cardData.from}
             name="from"
             className="form-control"
             onChange={inputHandler}
@@ -86,16 +98,16 @@ const CardForm = props => {
           <label htmlFor="textInput">Text</label>
           <textarea
             id="textInput"
-            cols="30"
-            rows="10"
+            cols={30}
+            rows={10}
             placeholder="Text"
             className="form-control"
             name="text"
             onChange={inputHandler}
-            value={state.text}
+            value={cardData.text}
           />
         </div>
-        <input type="submit" value={props.button} className="btn btn-primary" />
+        <input type="submit" value={button} className="btn btn-primary" />
       </form>
       {errorBlock}
     </>
