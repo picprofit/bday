@@ -5,14 +5,7 @@ import DateFact from "../components/DateFact";
 import NasaPicOfTheDay from "../components/NasaPicOfTheDay";
 import db from "../db";
 import NotFound from "./NotFound";
-
-interface ICard {
-  age: number;
-  birthday: Date;
-  name: string;
-  from: string;
-  text: string;
-};
+import { ICard } from "../interfaces";
 
 const Card = (props: any) => {
   console.log(props);
@@ -25,11 +18,11 @@ const Card = (props: any) => {
     from: "",
     text: ""
   });
-  const [cardClasses, setCardClasses] = useState('');
+  const [cardClasses, setCardClasses] = useState("");
   const { cardId } = props.match.params;
 
   useEffect(() => {
-    if(loading) {
+    if (loading) {
       db.fetch(`cards/${cardId}`, {
         context: {},
         then(data) {
@@ -71,7 +64,7 @@ const Card = (props: any) => {
   };
 
   if (!loading && hasError) {
-    return <NotFound text="Card not found"  />;
+    return <NotFound text="Card not found" />;
   }
   const from =
     cardData["from"].length > 0 ? (
@@ -102,7 +95,6 @@ const Card = (props: any) => {
       <div className="row">
         <div className="col-md-12">
           <div id="card" className={cardClasses}>
-
             <div id="card-inside">
               <div className="wrap">
                 <div className="container-fluid">
@@ -140,7 +132,6 @@ const Card = (props: any) => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

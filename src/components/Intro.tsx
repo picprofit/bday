@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+
 import Login from "../components/Login";
 import CardForm from "../components/CardForm";
 import { randomId } from "../helpers";
 import db from "../db";
+import { ICard } from "../interfaces";
 
-const Intro = props => {
+interface ICardDataToSave extends ICard {
+  owner?: string;
+};
+
+const Intro = (props: any) => {
   const defaultUid = "anonym";
   const [uid, setUid] = useState(defaultUid);
   const [lastError, setLastError] = useState({
@@ -12,9 +18,10 @@ const Intro = props => {
     errorMessage: ""
   });
 
-  const saveCard = cardData => {
+  const saveCard = (cardData: ICard) => {
+    const cardDataToSave: ICardDataToSave = cardData;
     const cardId = randomId();
-    cardData.owner = uid;
+    cardDataToSave.owner = uid;
     db.post(`cards/${cardId}`, {
       data: cardData
     })
@@ -50,7 +57,7 @@ const Intro = props => {
               With a Pic Of The Day from NASA and fun fact about an age and date
             </h3>
             <CardForm
-              age="0"
+              age={0}
               birthday={new Date()}
               name=""
               from="Anonym"

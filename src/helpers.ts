@@ -1,6 +1,6 @@
 const calculateAge = (birthday: Date): number => {
-  const ageDifMs = Date.now() - birthday.getTime();
-  const ageDate = new Date(ageDifMs); // miliseconds from epoch
+  const ageInMs = Date.now() - birthday.getTime();
+  const ageDate = new Date(ageInMs); // miliseconds from epoch
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import DatePicker from "react-datepicker";
 
 import { calculateAge } from "../helpers";
@@ -7,11 +7,11 @@ import { ICard } from "../interfaces";
 interface ICardForm extends ICard {
   error: string;
   button: string;
-  saveCard(cardData: ICard): {};
+  saveCard(cardData: ICard): void;
 }
 
-const CardForm: React.FC<{ props: ICardForm }> = ({ props }) => {
-  const { age, birthday, name, from, text, error, saveCard, button } = props;
+const CardForm: React.FC<ICardForm> = ( props ) => {
+  const { age = 0, birthday, name, from, text, error, saveCard, button } = props;
   const [cardData, setCardData] = useState<ICard>({
     age,
     birthday,
@@ -27,15 +27,15 @@ const CardForm: React.FC<{ props: ICardForm }> = ({ props }) => {
     });
   }, [birthday]);
 
-  const inputHandler = ({ target }) => {
-    console.log(target);
-    const { value, name } = target;
-    setState({
-      [name]: value
+  const inputHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value, name } = event.target;
+    setCardData({
+        ...cardData,
+        [name]: value
     });
   };
 
-  const submitHandler = (event: Event) => {
+  const submitHandler = (event: FormEvent) => {
     event.preventDefault();
     saveCard(cardData);
   };
@@ -47,7 +47,7 @@ const CardForm: React.FC<{ props: ICardForm }> = ({ props }) => {
 
   return (
     <>
-      <form onSubmit={submitHandler} className="text-left">
+      <form onSubmit={(e: FormEvent) => submitHandler(e)} className="text-left">
         <div className="form-group form-inline">
           <label htmlFor="datePicker">Select the birthday date</label>
           <DatePicker
