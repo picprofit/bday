@@ -57,7 +57,7 @@ const CardForm: React.FC<ICardForm> = ( props ) => {
                 birthday: selectedDate
               });
             }}
-            // selected={cardData.birthday}
+            selected={cardData.birthday}
             placeholderText="Click to select (your) birthday date"
             withPortal
             showYearDropdown
