@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import Login from "../components/Login";
 import CardForm from "../components/CardForm";
@@ -8,9 +9,10 @@ import { ICard } from "../interfaces";
 
 interface ICardDataToSave extends ICard {
   owner?: string;
-};
+}
 
-const Intro = (props: any) => {
+const Intro = () => {
+  const history = useHistory();
   const defaultUid = "anonym";
   const [uid, setUid] = useState(defaultUid);
   const [lastError, setLastError] = useState({
@@ -30,7 +32,7 @@ const Intro = (props: any) => {
           data: [cardId]
         })
           .then(() => {
-            props.history.push(`card/${cardId}`);
+            history.push(`card/${cardId}`);
           })
           .catch(error => {
             setLastError({

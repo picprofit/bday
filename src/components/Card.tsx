@@ -8,7 +8,6 @@ import NotFound from "./NotFound";
 import { ICard } from "../interfaces";
 
 const Card = (props: any) => {
-  console.log(props);
   const [loading, setLoading] = useState(true);
   const [hasError, setError] = useState(false);
   const [cardData, setCardData] = useState<ICard>({
