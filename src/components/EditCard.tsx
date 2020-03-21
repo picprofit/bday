@@ -12,15 +12,21 @@ interface IStatus {
   saved: boolean;
 }
 
+interface ICardDb extends ICard {
+  owner: string;
+}
+
 const EditCard = () => {
   const [uid, setUid] = useState<string>("");
-  const [card, setCard] = useState<ICard>({
+  const [card, setCard] = useState<ICardDb>({
     age: 0,
     birthday: new Date(),
     name: "",
     from: "",
-    text: ""
+    text: "",
+    owner: ""
   });
+
   const [status, setStatus] = useState<IStatus>({
     loaded: false,
     saved: false
@@ -30,8 +36,17 @@ const EditCard = () => {
   const { cardId } = params;
 
   useEffect(() => {
-    syncWithDb();
-  }, []);
+    db.syncState(`cards/${cardId}`, {
+      context: {
+        setState: ({ card }: { card: ICardDb }) => setCard({ ...card }),
+        state: { card }
+      },
+      state: "card",
+      then: () => {
+        setStatus({ ...status, loaded: true });
+      }
+    });
+  }, [cardId]);
 
   const saveCard = (cardData: ICard) => {
     setStatus({
@@ -48,20 +63,10 @@ const EditCard = () => {
     });
   };
 
-  const syncWithDb = () => {
-    // db.syncState(`cards/${cardId}`, {
-    //   state: "card",
-    //   then: () => {
-    //     setStatus({ ...status, loaded: true });
-    //   }
-    // });
-  };
-
   const birthdayDate = new Date(card.birthday);
   // if (status.loaded) {
   let result = null;
-  // if (uid === card.owner) {
-  if(true) {
+  if (uid === card.owner) {
     result = (
       <>
         <CardForm
@@ -95,8 +100,7 @@ const EditCard = () => {
         <div className="row">
           <div className="col-md-6 col-md-offset-3">
             <h1>Edit card</h1>
-            {!status.loaded && "...loading"}
-            {result}
+            {!status.loaded ? "...loading" : result}
             <Login setUid={setUid} />
           </div>
         </div>
