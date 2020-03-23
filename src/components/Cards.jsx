@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import db from "../db";
+import db  from "../db";
 import Login from "../components/Login";
 import { Link } from "react-router-dom";
 
@@ -23,6 +23,19 @@ const Cards = () => {
     }
   }, [uid]);
 
+  // useEffect(() => {
+  //     if(uid == null) {
+  //       return;
+  //     }
+  //   // Grab reference to the store.
+  //   const ref = db.ref(`owners/${uid}`);
+  //   // Sync the data.
+  //   ref.on('value', snapshot => {
+  //     if (snapshot.val())
+  //       setCards(snapshot.val());
+  //   });
+  // }, [uid]);
+
   const renderCardLink = key => {
     const cardLink = `card/${cards[key]}`;
     const editLink = `edit/${cards[key]}`;
@@ -39,7 +52,7 @@ const Cards = () => {
   };
 
   const cardsKeys = Object.keys(cards);
-  const Result =
+  const result =
     uid == null ? (
       <>
         <h1>Log in please to manage your cards</h1>
@@ -63,7 +76,7 @@ const Cards = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-6 col-md-offset-3">
-            {Result}
+            {result}
             <Login setUid={setUid} />
           </div>
         </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { LocationState } from "history";
 
 import Login from "../components/Login";
 import CardForm from "../components/CardForm";
@@ -14,6 +13,10 @@ interface IStatus {
 
 interface ICardDb extends ICard {
   owner: string;
+}
+
+interface IUrlParams {
+  cardId?: string;
 }
 
 const EditCard = () => {
@@ -32,7 +35,7 @@ const EditCard = () => {
     saved: false
   });
 
-  const params: any = useParams();
+  const params: IUrlParams = useParams();
   const { cardId } = params;
 
   useEffect(() => {
