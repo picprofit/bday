@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import PropTypes from "prop-types";
 
-const DateFact = ({ date }) => {
-  const [state, setState] = useState({
-    date: date,
-    fact: ""
-  });
+interface IDateFact {
+    date: Date;
+}
+
+const DateFact: React.FC<IDateFact> = ({ date: initialDate }) => {
+  const [date, setDate] = useState(initialDate);
+  const [fact, setFact] = useState("");
 
   useEffect(() => {
     getDateFact(date);
   }, [date]);
 
-  const getDateFact = date => {
+  const getDateFact = (date: Date) => {
     const dflt = "na";
     const url = `http://numbersapi.com/${date.getUTCMonth() +
       1}/${date.getUTCDate()}/date?default=${dflt}`;
@@ -22,31 +23,22 @@ const DateFact = ({ date }) => {
       method: "get"
     })
       .then(response => {
-        let result = `${response["data"]}`;
-        if (result === dflt) {
-          result = "";
-        }
-        setState({
-          date,
-          fact: result
-        });
+        const result = response["data"] !== dflt ? response["data"] : "";
+        setDate(date);
+        setFact(result);
       })
       .catch(function(error) {
         console.log(error);
       });
   };
 
-  return state.fact.length > 0 ? (
+  return fact.length > 0 ? (
     <>
       <p>
-        <b>Did you know,</b> {state.fact}
+        <b>Did you know,</b> {fact}
       </p>
     </>
   ) : null;
-};
-
-DateFact.propTypes = {
-  date: PropTypes.object
 };
 
 export default DateFact;
