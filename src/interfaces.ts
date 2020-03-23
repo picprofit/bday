@@ -5,3 +5,8 @@ export interface ICard {
     from: string;
     text: string;
 };
+
+
+export interface ICardId {
+    cardId?: string;
+}

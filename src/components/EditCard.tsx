@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Login from "../components/Login";
 import CardForm from "../components/CardForm";
 import db from "../db";
-import { ICard } from "../interfaces";
+import { ICard, ICardId } from "../interfaces";
 
 interface IStatus {
   loaded: boolean;
@@ -13,10 +13,6 @@ interface IStatus {
 
 interface ICardDb extends ICard {
   owner: string;
-}
-
-interface IUrlParams {
-  cardId?: string;
 }
 
 const EditCard = () => {
@@ -35,7 +31,7 @@ const EditCard = () => {
     saved: false
   });
 
-  const params: IUrlParams = useParams();
+  const params: ICardId = useParams();
   const { cardId } = params;
 
   useEffect(() => {

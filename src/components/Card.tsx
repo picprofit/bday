@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import NumFact from "../components/NumFact";
 import DateFact from "../components/DateFact";
 import NasaPicOfTheDay from "../components/NasaPicOfTheDay";
 import db from "../db";
 import NotFound from "./NotFound";
-import { ICard } from "../interfaces";
+import { ICard, ICardId } from "../interfaces";
 
-const Card = (props: any) => {
+interface IUrlParams {
+  cardId?: string;
+}
+
+const Card = () => {
   const [loading, setLoading] = useState(true);
   const [hasError, setError] = useState(false);
   const [cardData, setCardData] = useState<ICard>({
@@ -18,7 +23,9 @@ const Card = (props: any) => {
     text: ""
   });
   const [cardClasses, setCardClasses] = useState("");
-  const { cardId } = props.match.params;
+  
+  const params: ICardId = useParams();
+  const { cardId } = params;
 
   useEffect(() => {
     if (loading) {
