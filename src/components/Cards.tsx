@@ -3,9 +3,9 @@ import db  from "../db";
 import Login from "../components/Login";
 import { Link } from "react-router-dom";
 
-const Cards = () => {
+const Cards: React.FC = () => {
   const [uid, setUid] = useState( null);
-  const [cards, setCards] = useState( {});
+  const [cards, setCards] = useState<any>( {});
 
   useEffect(() => {
     if(uid == null) {
@@ -13,7 +13,7 @@ const Cards = () => {
     }
     const ref = db.syncState(`owners/${uid}`, {
       context: {
-        setState: ({ cards }) => setCards({ ...cards }),
+        setState: ({ cards }: any) => setCards({ ...cards }),
         state: { cards },
       },
       state: "cards"
@@ -36,7 +36,7 @@ const Cards = () => {
   //   });
   // }, [uid]);
 
-  const renderCardLink = key => {
+  const renderCardLink = (key: string) => {
     const cardLink = `card/${cards[key]}`;
     const editLink = `edit/${cards[key]}`;
     return (
