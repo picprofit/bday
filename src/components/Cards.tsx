@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 
 import db from "../db";
 import Login from "../components/Login";
-import { ICard } from "../interfaces";
+
+interface ICards {
+    [key: string]: string;
+}
 
 const Cards: React.FC = () => {
   const [uid, setUid] = useState(null);
-  const [cards, setCards] = useState<ICard[]>([]);
+  const [cards, setCards] = useState<ICards>({});
   console.log(cards);
   console.log(typeof cards);
 
@@ -17,6 +20,7 @@ const Cards: React.FC = () => {
     }
     const ref = db.syncState(`owners/${uid}`, {
       context: {
+        //setState: ({ cards }: ICards) => {console.log(cards); setCards(cards);},
         setState: ({ cards }: any) => setCards({ ...cards }),
         state: { cards }
       },
@@ -40,7 +44,7 @@ const Cards: React.FC = () => {
   //   });
   // }, [uid]);
 
-  const renderCardLink = (key: any) => {
+  const renderCardLink = (key: string) => {
     const cardLink = `card/${cards[key]}`;
     const editLink = `edit/${cards[key]}`;
     return (
