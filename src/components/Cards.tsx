@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from "react";
-import db  from "../db";
-import Login from "../components/Login";
 import { Link } from "react-router-dom";
 
+import db from "../db";
+import Login from "../components/Login";
+import { ICard } from "../interfaces";
+
 const Cards: React.FC = () => {
-  const [uid, setUid] = useState( null);
-  const [cards, setCards] = useState<any>( {});
+  const [uid, setUid] = useState(null);
+  const [cards, setCards] = useState<ICard[]>([]);
+  console.log(cards);
+  console.log(typeof cards);
 
   useEffect(() => {
-    if(uid == null) {
+    if (uid == null) {
       return;
     }
     const ref = db.syncState(`owners/${uid}`, {
       context: {
         setState: ({ cards }: any) => setCards({ ...cards }),
-        state: { cards },
+        state: { cards }
       },
       state: "cards"
     });
     return () => {
       db.removeBinding(ref);
-    }
+    };
   }, [uid]);
 
   // useEffect(() => {
@@ -36,7 +40,7 @@ const Cards: React.FC = () => {
   //   });
   // }, [uid]);
 
-  const renderCardLink = (key: string) => {
+  const renderCardLink = (key: any) => {
     const cardLink = `card/${cards[key]}`;
     const editLink = `edit/${cards[key]}`;
     return (

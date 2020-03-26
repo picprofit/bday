@@ -1,4 +1,5 @@
 import React from "react";
+import parse from "html-react-parser";
 
 interface IFaqItems {
   [question: string]: string;
@@ -25,9 +26,7 @@ const Faq: React.FC = () => {
                   <p>
                     <b>{key}</b>
                     <br />
-                    <span
-                      dangerouslySetInnerHTML={{ __html: faqItems[key] }}
-                    ></span>
+                    {parse(faqItems[key])}
                   </p>
                 </li>
               ))}
