@@ -11,11 +11,16 @@ interface ICardDataToSave extends ICard {
   owner?: string;
 }
 
+interface ILastError {
+  hasError: boolean;
+  errorMessage: string;
+}
+
 const Intro = () => {
   const history = useHistory();
   const defaultUid = "anonym";
-  const [uid, setUid] = useState(defaultUid);
-  const [lastError, setLastError] = useState({
+  const [uid, setUid] = useState<string>(defaultUid);
+  const [lastError, setLastError] = useState<ILastError>({
     hasError: false,
     errorMessage: ""
   });
