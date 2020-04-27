@@ -16,7 +16,7 @@ interface ICardDb extends ICard {
 }
 
 const EditCard = () => {
-  const [uid, setUid] = useState<string>("");
+  const [uid, setUid] = useState<string | null>(null);
   const [card, setCard] = useState<ICardDb>({
     age: 0,
     birthday: new Date(),

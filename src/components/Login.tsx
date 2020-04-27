@@ -3,8 +3,26 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { firebaseApp } from "../db";
 
-const Login = ({ setUid }) => {
-  const [state, setState] = useState({
+interface ILogin {
+  setUid: (uid: string | null) => void;
+}
+
+interface IAuthHandler {
+  uid?: string | null;
+  displayName?: string;
+  error?: boolean;
+}
+
+interface IState {
+  uid: string | null;
+  loaded: boolean;
+  displayName: string | null;
+  error: boolean | string;
+  errorMessage: string;
+}
+
+const Login: React.FC<ILogin> = ({ setUid }) => {
+  const [state, setState] = useState<IState>({
     uid: null,
     loaded: false,
     displayName: "",
@@ -12,58 +30,74 @@ const Login = ({ setUid }) => {
     errorMessage: ""
   });
 
-  const authenticate = provider => {
+  const authenticate = (provider: any) => {
+    // @ts-ignore
     const authProvider = new firebase.auth[`${provider}AuthProvider`]();
     firebaseApp
       .auth()
       .signInWithPopup(authProvider)
-      .then(() => {
-        authHandler();
+      .then((userCredential) => {
+        authHandler(userCredential.user);
       })
       .catch(error => {
         setState({
+          ...state,
           error: true,
           errorMessage: error.message
         });
       });
   };
 
-  const authHandler = authData => {
-    const user = authData.user;
+  const authHandler = (user: firebase.User | null) => {
+    if(user == null) {
+      setState({
+        ...state,
+        uid: null,
+        displayName: "",
+        error: false
+      });
+      setUid(null);
+      return;
+    }
+    const {uid = null, displayName = ""} = user;
     setState({
-      uid: user.uid,
-      displayName: user.displayName,
+      ...state,
+      uid,
+      displayName,
       error: false
     });
-    setUid(user.uid);
+    setUid(uid);
   };
 
   const logout = async () => {
     await firebase.auth().signOut();
     setState({
+      ...state,
       uid: null,
       error: false
     });
-    setUid();
+    setUid(null);
   };
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
+    // @ts-ignore
+    firebase.auth().onAuthStateChanged((user: firebase.User) => {
       if (user) {
-        authHandler({ user });
+        authHandler(user);
       }
       setState({
+        ...state,
         loaded: true
       });
     });
   }, []);
 
-  let errors = "";
-  if (state.error) {
-    errors = (
-      <p className="alert alert-warning animage-appear">{state.errorMessage}</p>
-    );
-  }
+  const errors = state.error ? (
+    <p className="alert alert-warning animage-appear">{state.errorMessage}</p>
+  ) : (
+    ""
+  );
+
   if (state.loaded) {
     if (state.uid == null) {
       return (

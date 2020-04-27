@@ -5,14 +5,12 @@ import db from "../db";
 import Login from "../components/Login";
 
 interface ICards {
-    [key: string]: string;
+  [key: string]: string;
 }
 
 const Cards: React.FC = () => {
-  const [uid, setUid] = useState(null);
+  const [uid, setUid] = useState<string | null>(null);
   const [cards, setCards] = useState<ICards>({});
-  console.log(cards);
-  console.log(typeof cards);
 
   useEffect(() => {
     if (uid == null) {

@@ -8,7 +8,7 @@ import db from "../db";
 import { ICard } from "../interfaces";
 
 interface ICardDataToSave extends ICard {
-  owner?: string;
+  owner?: string | null;
 }
 
 interface ILastError {
@@ -19,7 +19,7 @@ interface ILastError {
 const Intro = () => {
   const history = useHistory();
   const defaultUid = "anonym";
-  const [uid, setUid] = useState<string>(defaultUid);
+  const [uid, setUid] = useState<string | null>(defaultUid);
   const [lastError, setLastError] = useState<ILastError>({
     hasError: false,
     errorMessage: ""
