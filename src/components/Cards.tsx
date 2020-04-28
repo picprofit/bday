@@ -18,8 +18,7 @@ const Cards: React.FC = () => {
     }
     const ref = db.syncState(`owners/${uid}`, {
       context: {
-        //setState: ({ cards }: ICards) => {console.log(cards); setCards(cards);},
-        setState: ({ cards }: any) => setCards({ ...cards }),
+        setState: ({cards}: {cards: ICards}) => {setCards(cards);},
         state: { cards }
       },
       state: "cards"
@@ -28,19 +27,6 @@ const Cards: React.FC = () => {
       db.removeBinding(ref);
     };
   }, [uid]);
-
-  // useEffect(() => {
-  //     if(uid == null) {
-  //       return;
-  //     }
-  //   // Grab reference to the store.
-  //   const ref = db.ref(`owners/${uid}`);
-  //   // Sync the data.
-  //   ref.on('value', snapshot => {
-  //     if (snapshot.val())
-  //       setCards(snapshot.val());
-  //   });
-  // }, [uid]);
 
   const renderCardLink = (key: string) => {
     const cardLink = `card/${cards[key]}`;
