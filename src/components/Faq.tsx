@@ -10,7 +10,7 @@ const faqItems: IFaqItems = {
         and picture from NASA`,
   "For whom?": `Just for fun and for me to study React`,
   "Can i see the code?": `Sure, here's the 
-<a href="https://github.com/picprofit/bday" target="_blank" rel='noopener noreferrer'>Github repo</a>`
+<a href="https://github.com/kskonovalov/bday" target="_blank" rel='noopener noreferrer'>Github repo</a>`
 };
 
 const Faq: React.FC = () => {
