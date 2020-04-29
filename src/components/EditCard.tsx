@@ -15,7 +15,7 @@ interface ICardDb extends ICard {
   owner: string;
 }
 
-const EditCard = () => {
+const EditCard: React.FC = () => {
   const [uid, setUid] = useState<string | null>(null);
   const [card, setCard] = useState<ICardDb>({
     age: 0,
