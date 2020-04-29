@@ -13,8 +13,8 @@ interface IUrlParams {
 }
 
 const Card = () => {
-  const [loading, setLoading] = useState(true);
-  const [hasError, setError] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [hasError, setError] = useState<boolean | string>(false);
   const [cardData, setCardData] = useState<ICard>({
     age: 0,
     birthday: new Date(),
@@ -22,7 +22,7 @@ const Card = () => {
     from: "",
     text: ""
   });
-  const [cardClasses, setCardClasses] = useState("");
+  const [cardClasses, setCardClasses] = useState<string>("");
   
   const params: ICardId = useParams();
   const { cardId } = params;
