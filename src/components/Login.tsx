@@ -7,12 +7,6 @@ interface ILogin {
   setUid: (uid: string | null) => void;
 }
 
-interface IAuthHandler {
-  uid?: string | null;
-  displayName?: string;
-  error?: boolean;
-}
-
 interface IState {
   uid: string | null;
   loaded: boolean;
