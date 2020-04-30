@@ -16,7 +16,7 @@ interface ILastError {
   errorMessage: string;
 }
 
-const Intro = () => {
+const Intro: React.FC = () => {
   const history = useHistory();
   const defaultUid = "anonym";
   const [uid, setUid] = useState<string | null>(defaultUid);
